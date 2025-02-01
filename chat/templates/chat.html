@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Chat</title>
+</head>
+<body>
+    <h2>Bienvenido, {{ username }}</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="text" placeholder="Escribe un mensaje...">
+        <input type="file" name="image">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('clear_messages') }}">
+        <button type="submit">Borrar Conversación</button>
+    </form>
+
+    <ul>
+        {% for message in messages %}
+            <li><strong>{{ message.username }}:</strong> {{ message.text }}
+                {% if message.image_path %}
+                    <br><img src="{{ '/' + message.image_path }}" width="200">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
